@@ -1,0 +1,6 @@
+README.md
+supabase/
+package.json
+wrangler.jsonc
+.gitignore
+.assetsignore
