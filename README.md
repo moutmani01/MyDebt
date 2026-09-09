@@ -1,5 +1,8 @@
 # Simple Ledger
 
+[![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+[![No build step](https://img.shields.io/badge/build-none-brightgreen)](#local-development)
+
 A dependency-free, mobile-first debt and credit manager — a private notebook for
 who owes what. It uses Supabase for auth and storage and deploys as static files
 to Cloudflare Workers.
@@ -13,6 +16,8 @@ to Cloudflare Workers.
 - **Your data is yours.** Every row is scoped to your user id by Postgres
   row-level security. The publishable anon key in `supabase-config.js` cannot
   read or write anyone else's data.
+
+**Live:** <https://mydebt.mahfoudoutmani0.workers.dev>
 
 ---
 
@@ -30,6 +35,9 @@ to Cloudflare Workers.
 - [Data model](#data-model)
 - [Security notes](#security-notes)
 - [Known limitations & roadmap](#known-limitations--roadmap)
+- [Contributing](#contributing)
+- [Security](#security)
+- [License](#license)
 
 ---
 
@@ -179,24 +187,33 @@ This reads the same `wrangler.jsonc`, so it targets the same `mydebt` Worker.
 ## Local development
 
 ```bash
-npx wrangler dev
+cp public/supabase-config.example.js public/supabase-config.js   # first time only
+npm install
+npm run dev          # = wrangler dev, serves public/ on http://localhost:8787
+npm run check        # node --check on the JS
 ```
 
-Serves `public/` on `http://localhost:8787` exactly as Cloudflare will. Point
-`supabase-config.js` at your real (or a throwaway) Supabase project — there is no
+`wrangler dev` serves `public/` exactly as Cloudflare will. Point
+`supabase-config.js` at your own (or a throwaway) Supabase project — there is no
 local database. The service worker is not exercised under `wrangler dev`; test
-PWA/offline behaviour against the deployed URL.
+PWA/offline/update behaviour against a real HTTPS deploy.
 
 Edit `public/app.js` / `public/styles.css` directly; there is nothing to compile.
 
-### Bumping the service worker
+### Caching & updates
 
-`public/sw.js` is **network-first** with a versioned cache
-(`simple-ledger-vN`). When you change cached assets, bump the version string so
-installed clients drop the old cache on their next visit:
+`public/sw.js` is **stale-while-revalidate**: pages load instantly from cache
+while the shell is refreshed in the background. Every ~60 seconds (and whenever a
+tab becomes visible) the page asks the worker to compare the deployed
+`app.js` / `index.html` / `styles.css` against the cache; if they differ it shows
+a **"New version available — tap to update"** bar. A worker that changes its own
+code reloads open tabs automatically.
+
+When you change any cached shell file, bump the cache name so old caches are
+dropped on activate:
 
 ```js
-const CACHE = 'simple-ledger-v3';   // was v2
+const CACHE = 'simple-ledger-v5';   // was v4
 ```
 
 ---
@@ -360,3 +377,22 @@ Possible next steps:
 - A settings screen to change your account currency after sign-up.
 - Offline write queue that syncs on reconnect.
 - PNG app icons for nicer installs on iOS.
+
+---
+
+## Contributing
+
+Issues and pull requests are welcome. Please read
+[CONTRIBUTING.md](CONTRIBUTING.md) first — the short version: keep it
+dependency-free and no-build, one change per PR, run `npm run check`, and bump
+the `sw.js` cache name if you touch a cached file. By participating you agree to
+the [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Security
+
+Found a vulnerability? Please report it privately — see
+[SECURITY.md](SECURITY.md). Do not open a public issue.
+
+## License
+
+[Apache License 2.0](LICENSE) © Simple Ledger contributors.

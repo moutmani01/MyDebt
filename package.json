@@ -1,11 +1,36 @@
 {
   "name": "simple-ledger",
-  "private": true,
   "version": "1.0.0",
+  "description": "A dependency-free, mobile-first debt and credit manager. Vanilla JS + Supabase, deploys as static files to Cloudflare Workers.",
+  "keywords": [
+    "debt",
+    "ledger",
+    "iou",
+    "personal-finance",
+    "pwa",
+    "supabase",
+    "cloudflare-workers",
+    "vanilla-js",
+    "no-build"
+  ],
+  "homepage": "https://github.com/moutmani01/MyDebt#readme",
+  "bugs": {
+    "url": "https://github.com/moutmani01/MyDebt/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/moutmani01/MyDebt.git"
+  },
+  "license": "Apache-2.0",
   "scripts": {
-    "deploy": "wrangler deploy"
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "node --check public/app.js && node --check public/sw.js"
   },
   "devDependencies": {
     "wrangler": "^4.0.0"
+  },
+  "engines": {
+    "node": ">=18"
   }
 }
