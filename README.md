@@ -20,6 +20,7 @@ to Cloudflare Workers.
 
 - [How the ledger works](#how-the-ledger-works)
 - [Features](#features)
+- [Currency](#currency)
 - [Project layout](#project-layout)
 - [Set up Supabase](#set-up-supabase)
 - [Deploy to Cloudflare](#deploy-to-cloudflare)
@@ -46,14 +47,16 @@ it is never stored on the contact.
 - **Negative balance** → *you owe them*.
 - **Zero** → *settled up*.
 
-Amounts are always positive numbers; the direction comes from the type. All
-values are in **MAD** (the currency is currently fixed in code).
+Amounts are always positive numbers; the direction comes from the type. Every
+amount is labelled with the **currency you choose when you create your account**
+(see [Currency](#currency)). It is a display label only — no conversion happens.
 
 ---
 
 ## Features
 
-- Email/password accounts (Supabase Auth).
+- Email/password accounts (Supabase Auth), with a [currency](#currency) chosen at
+  sign-up.
 - Contacts, tagged **person** or **company**, with optional phone, email, notes.
 - Add / edit / delete transactions (debit or credit, dated, with a note).
 - Delete a contact — their transactions are removed with them.
@@ -65,6 +68,27 @@ values are in **MAD** (the currency is currently fixed in code).
   written.
 - Offline-tolerant: the app shell is cached, so it opens without a connection
   (data operations still need the network).
+
+---
+
+## Currency
+
+When you **create an account** you pick a currency from a short list of the ten
+most-traded ones:
+
+`USD` · `EUR` · `GBP` · `JPY` · `CNY` · `CAD` · `AUD` · `CHF` · `INR` · `MAD`
+
+- It is stored on your Supabase user as `user_metadata.currency` — no extra table,
+  no schema change.
+- It is a **label only**. Every amount in the app and in exported PDFs is suffixed
+  with the code (`1,250.00 EUR`). There is no exchange-rate conversion; don't mix
+  currencies in one account.
+- **There is no in-app switch yet.** Changing it means
+  `supabase.auth.updateUser({ data: { currency: 'XYZ' } })` or editing the user in
+  the Supabase dashboard.
+- **Fallback is `MAD`.** Any account without the field set — including every
+  account created before this feature, such as `mahfoudoutmani0@gmail.com` — shows
+  amounts in MAD.
 
 ---
 
@@ -111,6 +135,9 @@ Anything outside `public/` is never served.
 
    Without this, the confirmation link in sign-up emails points at the wrong
    place. Plain email/password sign-in works without it.
+
+No profile table is needed for [currency](#currency) — the sign-up form writes it
+to the user's `user_metadata`.
 
 ---
 
@@ -317,7 +344,8 @@ transactions(
 
 Current limitations:
 
-- Single currency (MAD), hard-coded.
+- One currency per account, chosen at sign-up, with no in-app way to change it
+  and no conversion between currencies.
 - Online-only for data — no offline queue; edits fail without a connection.
 - No CSV/JSON **export** (import only).
 - No de-duplication on import.
@@ -329,6 +357,6 @@ Possible next steps:
 - **Export CSV** (per contact and full) — pairs with import and doubles as a
   backup; small change.
 - Per-import undo, or tagging imported rows so a batch can be removed.
-- Configurable currency, or per-contact currency.
+- A settings screen to change your account currency after sign-up.
 - Offline write queue that syncs on reconnect.
 - PNG app icons for nicer installs on iOS.
