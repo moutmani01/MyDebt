@@ -13,7 +13,7 @@ that way unless there's a strong reason not to.
 
 ## Getting set up
 
-You need [Node.js](https://nodejs.org) 18+ and a free
+You need [Node.js](https://nodejs.org) 22+ (Wrangler's minimum) and a free
 [Supabase](https://supabase.com) project.
 
 ```bash
