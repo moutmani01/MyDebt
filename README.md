@@ -1,10 +1,12 @@
-# MyDebt
+# Tabs
+
+> **Keep tabs on who owes what.**
 
 [![CI](https://github.com/moutmani01/MyDebt/actions/workflows/ci.yml/badge.svg)](https://github.com/moutmani01/MyDebt/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![No build step](https://img.shields.io/badge/build-none-brightgreen)](#local-development)
 
-**MyDebt** is a dependency-free, mobile-first debt and credit manager — a private
+**Tabs** is a dependency-free, mobile-first debt and credit manager — a private
 notebook for who owes what. It uses Supabase for auth and storage and deploys as
 static files to Cloudflare Workers.
 
@@ -154,13 +156,17 @@ to the user's `user_metadata`.
 
 The repo is connected to **Cloudflare Workers Builds**. On every push to `main`:
 
-1. Cloudflare clones the repo and runs `bun install` (installs `wrangler`).
+1. Cloudflare clones the repo and runs `npm install` (installs `wrangler`).
 2. It runs `npx wrangler deploy`.
 3. `wrangler` uploads everything in `public/` as static assets to the Worker
    named **`mydebt`** (set in [`wrangler.jsonc`](wrangler.jsonc)).
 
 There is **no build command**. The site is live at the Worker's `*.workers.dev`
 URL (or your custom domain) within a minute.
+
+> The Cloudflare Worker and its `mydebt.*.workers.dev` URL keep their original
+> name — renaming a live Worker changes its URL and breaks existing installs.
+> Point a custom domain at it if you want the name to match.
 
 > **Why `public/` and not the repo root?** `wrangler deploy` uploads its whole
 > assets directory. If that were `.`, it would try to upload `node_modules/`
@@ -214,7 +220,7 @@ When you change any cached shell file, bump the cache name so old caches are
 dropped on activate:
 
 ```js
-const CACHE = 'mydebt-v6';   // was v5
+const CACHE = 'tabs-v7';   // was tabs-v6
 ```
 
 ---
@@ -396,4 +402,4 @@ Found a vulnerability? Please report it privately — see
 
 ## License
 
-[Apache License 2.0](LICENSE) © MyDebt contributors.
+[Apache License 2.0](LICENSE) © Tabs contributors.

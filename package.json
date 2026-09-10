@@ -1,7 +1,7 @@
 {
-  "name": "mydebt",
+  "name": "tabs",
   "version": "1.0.0",
-  "description": "MyDebt — a dependency-free, mobile-first debt and credit manager. Vanilla JS + Supabase, deploys as static files to Cloudflare Workers.",
+  "description": "Tabs — keep tabs on who owes what. A dependency-free, mobile-first debt and credit manager: vanilla JS + Supabase, deployed as static files to Cloudflare Workers.",
   "keywords": [
     "debt",
     "ledger",

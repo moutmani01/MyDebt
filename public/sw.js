@@ -1,9 +1,9 @@
-// MyDebt service worker.
+// Tabs service worker.
 // Strategy: stale-while-revalidate for same-origin GETs (instant loads, cache
 // refreshed in the background) + an explicit "check-update" message the page
 // sends periodically, which re-fetches the shell and notifies open tabs when
 // the deployed code actually changed so they can offer a one-tap reload.
-const CACHE = 'mydebt-v5';
+const CACHE = 'tabs-v6';
 const SHELL = ['./', './index.html', './styles.css', './app.js', './manifest.webmanifest', './icons/icon.svg'];
 const FRESH_CHECK = ['./app.js', './index.html', './styles.css'];
 
