@@ -1,7 +1,7 @@
 {
-  "name": "simple-ledger",
+  "name": "mydebt",
   "version": "1.0.0",
-  "description": "A dependency-free, mobile-first debt and credit manager. Vanilla JS + Supabase, deploys as static files to Cloudflare Workers.",
+  "description": "MyDebt — a dependency-free, mobile-first debt and credit manager. Vanilla JS + Supabase, deploys as static files to Cloudflare Workers.",
   "keywords": [
     "debt",
     "ledger",

@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Syntax-check JavaScript
+        run: |
+          for f in public/*.js; do echo "node --check $f"; node --check "$f"; done
+
+      - name: Validate package.json and manifest
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('package.json','utf8'))"
+          node -e "JSON.parse(require('fs').readFileSync('public/manifest.webmanifest','utf8'))"
+
+      - name: Validate Cloudflare config and assets
+        run: npx wrangler deploy --dry-run
+
+      - name: No service_role key in shipped code
+        run: |
+          if grep -rniE 'service_role|SUPABASE_SERVICE_KEY' public/ supabase/; then
+            echo "::error::A service_role reference is in shipped code — remove it."
+            exit 1
+          fi
+
+      - name: supabase-config.example.js is present
+        run: test -f public/supabase-config.example.js

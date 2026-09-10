@@ -1,4 +1,4 @@
-# Contributing to Simple Ledger
+# Contributing to MyDebt
 
 Thanks for taking the time to contribute! This is a small, deliberately
 low-tech project — no framework, no build step, no transpiler. Please keep it
@@ -59,7 +59,7 @@ npm run check     # node --check on app.js and sw.js
   helper in `app.js`.
 - If you touch anything in the cached shell (`app.js`, `index.html`,
   `styles.css`, `sw.js`), bump `CACHE` in `public/sw.js`
-  (`simple-ledger-vN` → `vN+1`).
+  (`mydebt-vN` → `vN+1`).
 - Update `README.md` if you change behaviour, the CSV format, or setup steps.
 
 ## Commit messages

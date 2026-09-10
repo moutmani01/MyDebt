@@ -1,11 +1,12 @@
-# Simple Ledger
+# MyDebt
 
+[![CI](https://github.com/moutmani01/MyDebt/actions/workflows/ci.yml/badge.svg)](https://github.com/moutmani01/MyDebt/actions/workflows/ci.yml)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 [![No build step](https://img.shields.io/badge/build-none-brightgreen)](#local-development)
 
-A dependency-free, mobile-first debt and credit manager — a private notebook for
-who owes what. It uses Supabase for auth and storage and deploys as static files
-to Cloudflare Workers.
+**MyDebt** is a dependency-free, mobile-first debt and credit manager — a private
+notebook for who owes what. It uses Supabase for auth and storage and deploys as
+static files to Cloudflare Workers.
 
 - **No build step, no framework.** One HTML file, one stylesheet, one compact
   `app.js` (~25 KB). The only runtime dependency is the Supabase JS client,
@@ -213,7 +214,7 @@ When you change any cached shell file, bump the cache name so old caches are
 dropped on activate:
 
 ```js
-const CACHE = 'simple-ledger-v5';   // was v4
+const CACHE = 'mydebt-v6';   // was v5
 ```
 
 ---
@@ -395,4 +396,4 @@ Found a vulnerability? Please report it privately — see
 
 ## License
 
-[Apache License 2.0](LICENSE) © Simple Ledger contributors.
+[Apache License 2.0](LICENSE) © MyDebt contributors.
