@@ -72,7 +72,8 @@ amount is labelled with the **currency you choose when you create your account**
 - Add / edit / delete transactions (debit or credit, dated, with a note).
 - Delete a contact — their transactions are removed with them.
 - Home screen: net balance, total owed to you, total you owe, recent activity.
-- Search and filter contacts.
+- Search, filter (people / companies), and sort contacts by name or balance —
+  the sort choice is remembered on the device.
 - **[Export a contact's statement as PDF](#pdf-export).**
 - **[Import history from CSV](#csv-import)** — per contact, or a whole migration
   in one file. Strictly validated; a preview/confirm step before anything is
@@ -220,7 +221,7 @@ When you change any cached shell file, bump the cache name so old caches are
 dropped on activate:
 
 ```js
-const CACHE = 'tabs-v7';   // was tabs-v6
+const CACHE = 'tabs-v8';   // was tabs-v7
 ```
 
 ---
